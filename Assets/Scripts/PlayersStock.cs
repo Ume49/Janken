@@ -6,5 +6,5 @@ using UnityEngine.SceneManagement;
 public class PlayersStock : MonoBehaviour
 {
     // 今回対戦するプレーヤー
-    public static Queue<Human> players;
+    public static Queue<Human> players = new Queue<Human>();
 }
