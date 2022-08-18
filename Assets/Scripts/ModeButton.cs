@@ -12,7 +12,7 @@ public class ModeButton : MonoBehaviour
         List<Human> playerComponents = new List<Human>();
 
         foreach(var w in players_){
-            var instanceObject = (GameObject)Instantiate(w, Vector3.zero, Quaternion.identity);
+            var instanceObject = Instantiate(w, Vector3.zero, Quaternion.identity);
 
             // シーン遷移で消えると困るので
             DontDestroyOnLoad(instanceObject);
