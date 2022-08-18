@@ -1,17 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ResultDisplayer : MonoBehaviour
 {
-    // 0 å‹ã¡
-    // 1 è² ã‘
-    // 2 å¼•ãåˆ†ã‘
-    [SerializeField] string[] resultMessageCandidate_ = new string[3];
+    [SerializeField] UnityEngine.UI.Text resultText_;
 
-    // åˆ—æŒ™å‹ã®çµæœã‚’æ¸¡ã™ã¨ãã‚Œã«å¿œã˜ãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
-    public void Display(EResult result){
-        GetComponent<Text>().text = resultMessageCandidate_[(int)result];
+    string winner;
+
+    const string PlayerName = "Player(Clone)";
+    const string EnemyName  = "Enemy(Clone)";
+
+    // ƒvƒŒƒCƒ„[‘Î“G‚©‚Ç‚¤‚©
+    bool isPvsC(List<Human> players) {
+        bool flag = false;
+
+        foreach(var w in players) {
+            // Player‚ª‚P‚Â‚Å‚àƒŠƒXƒg‚É¬‚¶‚Á‚Ä‚¢‚½‚çtrue‚É‚È‚é
+            flag |= w.gameObject.name == PlayerName;   
+        }
+
+        return flag;
+    }
+
+    public void Display(List<Human> playerList, int result) {
+        // ”ñ•\¦‚É‚È‚Á‚Ä‚¢‚éŒ‹‰Ê•\¦ƒGƒŠƒA‚ğ•\¦‚³‚¹‚é
+        resultText_.gameObject.SetActive(true);
+
+        // ˆø‚«•ª‚¯‚Ì
+        if(result == -1) {
+            resultText_.text = "‚ ‚¢‚±";
+            return;
+        }
+
+        string WinnerObjectName = playerList[result].gameObject.name;
+
+        if (WinnerObjectName == PlayerName) {
+            winner = "ƒLƒ~";
+        }
+        else
+        if (WinnerObjectName == EnemyName) {
+            winner = "‘Šè";
+        }
+
+        // “Gvs“G‚¾‚Á‚½ê‡‚Ì’Ç‰Áˆ—
+        if (isPvsC(playerList) == false) {
+            winner += "(" + (result + 1).ToString() + "”Ô–Ú)";
+        }
+
+        // o—Í
+        resultText_.text = winner + "‚ÌŸ‚¿";
     }
 }
